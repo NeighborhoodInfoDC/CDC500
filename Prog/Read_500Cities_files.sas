@@ -24,11 +24,11 @@ proc import datafile="L:\Libraries\CDC500\Raw\500cities_raw.csv"
 run;
 
 
-data CDC500_2017;
+data CDC500_2017_2;
    set CDC500_2017;
   * input ACCESS2_Crude95CI $60.;
-   LowACCESS2_Crude95CI= scan(ACCESS2_Crude95CI, 1, '(,');
-   LowARTHRITIS_Crude95CI= scan(ARTHRITIS_Crude95CI, 1,'(,');
+   LowACCESS2_Crude95CI= scan(ACCESS2_Crude95CI, 1, '(,') + 0;
+   LowARTHRITIS_Crude95CI= scan(ARTHRITIS_Crude95CI, 1,'(,') + 0;
    LowBINGE_Crude95CI = scan(BINGE_Crude95CI, 1,'(,');
    LowBPHIGH_Crude95CI= scan(BPHIGH_Crude95CI , 1,'(,');
    LowBPMED_Crude95CI= scan(BPMED_Crude95CI , 1,'(,');
@@ -57,8 +57,8 @@ data CDC500_2017;
    LowTEETHLOST_Crude95CI= scan(TEETHLOST_Crude95CI , 1,'(,');
 run;
 
-data CDC500_2017;
-   set CDC500_2017;
+data CDC500_2017_3;
+   set CDC500_2017_2;
    SEACCESS2_CrudePrev=ACCESS2_CrudePrev-LowACCESS2_Crude95CI;
    SEARTHRITIS_CrudePrev= ARTHRITIS_CrudePrev-LowARTHRITIS_Crude95CI;
    SEBINGE_CrudePrev=BINGE_CrudePrev - LowARTHRITIS_Crude_95CI;
