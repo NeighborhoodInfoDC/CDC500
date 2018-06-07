@@ -26,7 +26,11 @@ run;
 
 data CDC500_2017_2;
    set CDC500_2017raw;
-  * input ACCESS2_Crude95CI $60.;
+
+   ** Create GEO2010 **;
+   geo2010 = put(TractFIPS,z11.);
+  
+   ** Take the bottom number of confidence interval, convert to numeric **;
    LowACCESS2_Crude95CI= scan(ACCESS2_Crude95CI, 1, '(,') + 0;
    LowARTHRITIS_Crude95CI= scan(ARTHRITIS_Crude95CI, 1,'(,') + 0;
    LowBINGE_Crude95CI = scan(BINGE_Crude95CI, 1,'(,') + 0;
@@ -55,40 +59,54 @@ data CDC500_2017_2;
    LowSLEEP_Crude95CI= scan(SLEEP_Crude95CI , 1,'(,') + 0;
    LowSTROKE_Crude95CI= scan(STROKE_Crude95CI , 1,'(,') + 0;
    LowTEETHLOST_Crude95CI= scan(TEETHLOST_Crude95CI , 1,'(,') + 0;
+
+   ** Create MOE by subtracting CI from estimate **;
+   ACCESS2_CrudePrev_MOE=ACCESS2_CrudePrev-LowACCESS2_Crude95CI;
+   ARTHRITIS_CrudePrev_MOE= ARTHRITIS_CrudePrev-LowARTHRITIS_Crude95CI; 
+   BINGE_CrudePrev_MOE=BINGE_CrudePrev - LowBINGE_Crude95CI;
+   BPHIGH_CrudePrev_MOE=BPHIGH_CrudePrev - LowBPHIGH_Crude95CI;
+   BPMED_CrudePrev_MOE=BPMED_CrudePrev - LowBPMED_Crude95CI;
+   CANCER_CrudePrev_MOE=CANCER_CrudePrev - LowCANCER_Crude95CI;
+   CASTHMA_CrudePrev_MOE=CASTHMA_CrudePrev - LowCASTHMA_Crude95CI;
+   CHD_CrudePrev_MOE=CHD_CrudePrev - LowCHD_Crude95CI;
+   CHECKUP_CrudePrev_MOE=CHECKUP_CrudePrev - LowCHECKUP_Crude95CI;
+   CHOLSCREEN_CrudePrev_MOE=CHOLSCREEN_CrudePrev - LowCHOLSCREEN_Crude95CI;
+   COLON_SCREEN_CrudePrev_MOE=COLON_SCREEN_CrudePrev - LowCOLON_SCREEN_Crude95CI;
+   COPD_CrudePrev_MOE=COPD_CrudePrev - LowCOPD_Crude95CI;
+   COREM_CrudePrev_MOE=COREM_CrudePrev - LowCOREM_Crude95CI;
+   COREW_CrudePrev_MOE=COREW_CrudePrev - LowCOREW_Crude95CI;
+   CSMOKING_CrudePrev_MOE=CSMOKING_CrudePrev - LowCSMOKING_Crude95CI;
+   DENTAL_CrudePrev_MOE=DENTAL_CrudePrev - LowDENTAL_Crude95CI;
+   DIABETES_CrudePrev_MOE=DIABETES_CrudePrev - LowDIABETES_Crude95CI;
+   HIGHCHOL_CrudePrev_MOE=HIGHCHOL_CrudePrev - LowHIGHCHOL_Crude95CI;
+   KIDNEY_CrudePrev_MOE=KIDNEY_CrudePrev - LowKIDNEY_Crude95CI;
+   LPA_CrudePrev_MOE=LPA_CrudePrev - LowLPA_Crude95CI;
+   MAMMOUSE_CrudePrev_MOE=MAMMOUSE_CrudePrev - LowMAMMOUSE_Crude95CI;
+   MHLTH_CrudePrev_MOE=MHLTH_CrudePrev - LowMHLTH_Crude95CI;
+   OBESITY_CrudePrev_MOE=OBESITY_CrudePrev - LowOBESITY_Crude95CI;
+   PAPTEST_CrudePrev_MOE=PAPTEST_CrudePrev - LowPAPTEST_Crude95CI;
+   PHLTH_CrudePrev_MOE=PHLTH_CrudePrev - LowPHLTH_Crude95CI;
+   SLEEP_CrudePrev_MOE=SLEEP_CrudePrev - LowSLEEP_Crude95CI;
+   STROKE_CrudePrev_MOE=STROKE_CrudePrev - LowSTROKE_Crude95CI;
+   TEETHLOST_CrudePrev_MOE=TEETHLOST_CrudePrev - LowTEETHLOST_Crude95CI;
+
+   keep geo2010
+
+		ACCESS2_CrudePrev ARTHRITIS_CrudePrev BINGE_CrudePrev BPHIGH_CrudePrev BPMED_CrudePrev CANCER_CrudePrev
+   		CASTHMA_CrudePrev CHD_CrudePrev CHECKUP_CrudePrev CHOLSCREEN_CrudePrev COLON_SCREEN_CrudePrev COPD_CrudePrev
+		COREM_CrudePrev COREW_CrudePrev CSMOKING_CrudePrev DENTAL_CrudePrev DIABETES_CrudePrev HIGHCHOL_CrudePrev
+		KIDNEY_CrudePrev LPA_CrudePrev MAMMOUSE_CrudePrev OBESITY_CrudePrev PAPTEST_CrudePrev PHLTH_CrudePrev
+		SLEEP_CrudePrev STROKE_CrudePrev TEETHLOST_CrudePrev
+
+		ACCESS2_CrudePrev_MOE ARTHRITIS_CrudePrev_MOE BINGE_CrudePrev_MOE BPHIGH_CrudePrev_MOE BPMED_CrudePrev_MOE CANCER_CrudePrev_MOE
+   		CASTHMA_CrudePrev_MOE CHD_CrudePrev_MOE CHECKUP_CrudePrev_MOE CHOLSCREEN_CrudePrev_MOE COLON_SCREEN_CrudePrev_MOE COPD_CrudePrev_MOE
+		COREM_CrudePrev_MOE COREW_CrudePrev_MOE CSMOKING_CrudePrev_MOE DENTAL_CrudePrev_MOE DIABETES_CrudePrev_MOE HIGHCHOL_CrudePrev_MOE
+		KIDNEY_CrudePrev_MOE LPA_CrudePrev_MOE MAMMOUSE_CrudePrev_MOE OBESITY_CrudePrev_MOE PAPTEST_CrudePrev_MOE PHLTH_CrudePrev_MOE
+		SLEEP_CrudePrev_MOE STROKE_CrudePrev_MOE TEETHLOST_CrudePrev_MOE
+		;
+
 run;
 
-data CDC500_2017_final;
-   set CDC500_2017_2;
-   MOEACCESS2_CrudePrev=ACCESS2_CrudePrev-LowACCESS2_Crude95CI;
-   MOEARTHRITIS_CrudePrev= ARTHRITIS_CrudePrev-LowARTHRITIS_Crude95CI; 
-   MOEBINGE_CrudePrev=BINGE_CrudePrev - LowBINGE_Crude95CI;
-   MOEBPHIGH_CrudePrev=BPHIGH_CrudePrev - LowBPHIGH_Crude95CI;
-   MOEBPMED_CrudePrev=BPMED_CrudePrev - LowBPMED_Crude95CI;
-   MOECANCER_CrudePrev=CANCER_CrudePrev - LowCANCER_Crude95CI;
-   MOECASTHMA_CrudePrev=CASTHMA_CrudePrev - LowCASTHMA_Crude95CI;
-   MOECHD_CrudePrev=CHD_CrudePrev - LowCHD_Crude95CI;
-   MOECHECKUP_CrudePrev=CHECKUP_CrudePrev - LowCHECKUP_Crude95CI;
-   MOECHOLSCREEN_CrudePrev=CHOLSCREEN_CrudePrev - LowCHOLSCREEN_Crude95CI;
-   MOECOLON_SCREEN_CrudePrev=COLON_SCREEN_CrudePrev - LowCOLON_SCREEN_Crude95CI;
-   MOECOPD_CrudePrev=COPD_CrudePrev - LowCOPD_Crude95CI;
-   MOECOREM_CrudePrev=COREM_CrudePrev - LowCOREM_Crude95CI;
-   MOECOREW_CrudePrev=COREW_CrudePrev - LowCOREW_Crude95CI;
-   MOECSMOKING_CrudePrev=CSMOKING_CrudePrev - LowCSMOKING_Crude95CI;
-   MOEDENTAL_CrudePrev=DENTAL_CrudePrev - LowDENTAL_Crude95CI;
-   MOEDIABETES_CrudePrev=DIABETES_CrudePrev - LowDIABETES_Crude95CI;
-   MOEHIGHCHOL_CrudePrev=HIGHCHOL_CrudePrev - LowHIGHCHOL_Crude95CI;
-   MOEKIDNEY_CrudePrev=KIDNEY_CrudePrev - LowKIDNEY_Crude95CI;
-   MOELPA_CrudePrev=LPA_CrudePrev - LowLPA_Crude95CI;
-   MOEMAMMOUSE_CrudePrev=MAMMOUSE_CrudePrev - LowMAMMOUSE_Crude95CI;
-   MOEMHLTH_CrudePrev=MHLTH_CrudePrev - LowMHLTH_Crude95CI;
-   MOEOBESITY_CrudePrev=OBESITY_CrudePrev - LowOBESITY_Crude95CI;
-   MOEPAPTEST_CrudePrev=PAPTEST_CrudePrev - LowPAPTEST_Crude95CI;
-   MOEPHLTH_CrudePrev=PHLTH_CrudePrev - LowPHLTH_Crude95CI;
-   MOESLEEP_CrudePrev=SLEEP_CrudePrev - LowSLEEP_Crude95CI;
-   MOESTROKE_CrudePrev=STROKE_CrudePrev - LowSTROKE_Crude95CI;
-   MOETEETHLOST_CrudePrev=TEETHLOST_CrudePrev - LowTEETHLOST_Crude95CI;
-
-run;
 
 /*
 proc sort data=CDC500_2017 out=CDC500.CDC500_2017 (label="CDC 500 Cities 2017 data");
