@@ -16,6 +16,8 @@
 %DCData_lib( CDC500 )
 libname raw "L:\Libraries\CDC500\Raw";
 
+
+** Import raw data **;
 proc import datafile="L:\Libraries\CDC500\Raw\500cities_raw.csv"
    out=CDC500_2017raw
    dbms=csv
@@ -24,7 +26,8 @@ proc import datafile="L:\Libraries\CDC500\Raw\500cities_raw.csv"
 run;
 
 
-data CDC500_2017_2;
+** Cleanup raw data & convert MOEs **;
+data CDC500_2017;
    set CDC500_2017raw;
 
    ** Create GEO2010 **;
@@ -108,23 +111,16 @@ data CDC500_2017_2;
 run;
 
 
-/*
-proc sort data=CDC500_2017 out=CDC500.CDC500_2017 (label="CDC 500 Cities 2017 data");
-  by TractFIPS;
-
-proc contents data=CDC500_2017;
-run;
-*/
-
-
 ** Save final dataset to SAS1 **;
 
 %Finalize_data_set( 
-  data=CDC500_2017_final,
+  data=CDC500_2017,
   out=CDC500_2017,
   outlib=CDC500,
   label="Centers for Disease Control and Prevention 500 cities project census tract-level data 2017 release",
-  sortby=TractFIPS,
+  sortby=geo2010,
   restrictions=None,
   revisions=New File.
   );
+
+  /* End of program */
