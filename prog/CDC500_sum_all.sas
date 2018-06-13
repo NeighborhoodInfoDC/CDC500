@@ -18,6 +18,8 @@
 ** Define libraries **;
 %DCData_lib( CDC500 )
 
+%let pct_vars = ACCESS2_CrudePrev;
+
 
 %Create_all_summary_from_tracts( 
 
@@ -31,7 +33,7 @@
   data_pre=Cdc500, 
   data_label=%str(CDC500 summary, DC),
   count_vars=, 
-  prop_vars=ACCESS2_CrudePrev, 
+  prop_vars=&pct_vars., 
   calc_vars=, 
   calc_vars_labels=,
   creator_process=CDC500_sum_all.sas,
