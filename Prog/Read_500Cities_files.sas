@@ -111,6 +111,7 @@ data CDC500_2017;
 ;
 
   label
+    geo2010 = "Census tract (2010) SSCCCTTTTTT"
     ACCESS2_CrudePrev = "Model-based estimate for crude prevalence of current lack of health insurance among adults aged 18-64 years"
     ARTHRITIS_CrudePrev = "Model-based estimate for crude prevalence of arthritis among adults aged >=18 years"
     BINGE_CrudePrev= "Model-based estimate for crude prevalence of binge drinking among adults aged >=18 years"
