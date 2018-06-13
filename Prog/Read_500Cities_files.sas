@@ -179,7 +179,7 @@ run;
 
 %Finalize_data_set( 
   data=CDC500_2017,
-  out=CDC500_2017_sum_tr10,
+  out=CDC500_2017,
   outlib=CDC500,
   label="Centers for Disease Control and Prevention 500 cities project census tract-level data 2017 release",
   sortby=geo2010,
