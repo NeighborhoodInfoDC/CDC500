@@ -18,8 +18,11 @@
 ** Define libraries **;
 %DCData_lib( CDC500 )
 
-%let pct_vars = ACCESS2_CrudePrev;
-
+%let pct_vars = ACCESS2_CrudePrev ARTHRITIS_CrudePrev BINGE_CrudePrev BPHIGH_CrudePrev BPMED_CrudePrev CANCER_CrudePrev
+   		CASTHMA_CrudePrev CHD_CrudePrev CHECKUP_CrudePrev CHOLSCREEN_CrudePrev COLON_SCREEN_CrudePrev COPD_CrudePrev
+		COREM_CrudePrev COREW_CrudePrev CSMOKING_CrudePrev DENTAL_CrudePrev DIABETES_CrudePrev HIGHCHOL_CrudePrev
+		KIDNEY_CrudePrev LPA_CrudePrev MAMMOUSE_CrudePrev MHLTH_CrudePrev OBESITY_CrudePrev PAPTEST_CrudePrev PHLTH_CrudePrev
+		SLEEP_CrudePrev STROKE_CrudePrev TEETHLOST_CrudePrev ;
 
 %Create_all_summary_from_tracts( 
 
@@ -30,7 +33,7 @@
   revisions=%str(New File),
 
   lib=CDC500,
-  data_pre=Cdc500, 
+  data_pre=Cdc500_2017_sum, 
   data_label=%str(CDC500 summary, DC),
   count_vars=, 
   prop_vars=&pct_vars., 
