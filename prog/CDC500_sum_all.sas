@@ -25,13 +25,13 @@
   register=Y,
   
   /** Update with information on latest file revision **/
-  revisions=%str(),
+  revisions=%str(New File),
 
   lib=CDC500,
-  data_pre=CDC500_2017_sum_tr10, 
+  data_pre=Cdc500, 
   data_label=%str(CDC500 summary, DC),
   count_vars=, 
-  prop_vars=median:, 
+  prop_vars=ACCESS2_CrudePrev, 
   calc_vars=, 
   calc_vars_labels=,
   creator_process=CDC500_sum_all.sas,
